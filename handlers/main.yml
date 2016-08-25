@@ -2,6 +2,6 @@
 # handlers file for girder
 
 - name: Build Girder
-  command: "npm install --production"
+  command: "ls"
   args:
     chdir: "{{ girder_path }}"

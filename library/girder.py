@@ -429,6 +429,17 @@ options:
                     - list of local file paths
                     - files will be uploaded to the item
 
+   setting:
+      required: false
+      description:
+         - Get/set the values of system settings
+      options:
+         key:
+          required: true
+          description:
+             - The key identifying this setting
+
+
 '''
 
 EXAMPLES = '''
@@ -1026,7 +1037,7 @@ class GirderClientModule(GirderClient):
 
     # Exclude these methods from both 'raw' mode
     _include_methods = ['get', 'put', 'post', 'delete', 'patch',
-                        'plugins', 'user', 'assetstore',
+                        'plugins', 'user', 'assetstore', 'setting',
                         'collection', 'folder', 'item', 'files',
                         'group']
 
@@ -1750,6 +1761,14 @@ class GirderClientModule(GirderClient):
                 self.changed = True
 
         return ret
+
+    def setting(self, key, value):
+        if self.module.params['state'] == 'present':
+            import pickle
+            with open('/tmp/foobar', 'wb') as outfile:
+                pickle.dump(value, outfile)
+
+
 
 
 def main():
